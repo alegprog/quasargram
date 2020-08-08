@@ -20,7 +20,18 @@
 
     <q-footer elevated>
       <q-toolbar>
-        <q-toolbar-title>Footer</q-toolbar-title>
+        <q-tabs>
+          <q-route-tab
+            to="/"
+            name="home"
+            icon="mail"
+            label="Home" />
+          <q-route-tab
+            to="/camera"
+            name="camera"
+            icon="alarm"
+            label="Camera" />
+        </q-tabs>
       </q-toolbar>
     </q-footer>
 
