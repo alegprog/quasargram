@@ -18,6 +18,12 @@
       </q-toolbar>
     </q-header>
 
+    <q-footer elevated>
+      <q-toolbar>
+        <q-toolbar-title>Footer</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
