@@ -5,9 +5,27 @@
       bordered
       >
       <q-toolbar>
+        <q-btn
+          flat
+          round
+          dense
+          to="/camera"
+          size="18px"
+          icon="eva-camera-outline" 
+          class="large-screen-only"/>
+
         <q-toolbar-title class="text-grand-hotel text-bold">
           Quasargram
         </q-toolbar-title>
+
+        <q-btn
+          flat
+          round
+          dense
+          to="/"
+          size="18px"
+          icon="eva-home-outline" 
+          class="large-screen-only"/>        
       </q-toolbar>
     </q-header>
 
