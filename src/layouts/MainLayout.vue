@@ -18,21 +18,26 @@
       </q-toolbar>
     </q-header>
 
-    <q-footer elevated>
-      <q-toolbar>
-        <q-tabs>
-          <q-route-tab
-            to="/"
-            name="home"
-            icon="mail"
-            label="Home" />
-          <q-route-tab
-            to="/camera"
-            name="camera"
-            icon="alarm"
-            label="Camera" />
-        </q-tabs>
-      </q-toolbar>
+    <q-footer
+      class="bg-white"
+      bordered
+      >
+      <q-tabs
+        class="text-grey-10"
+        active-color="primary"
+        indicator-color="transparent"
+        >
+        <q-route-tab
+          to="/"
+          name="home"
+          icon="mail"
+          label="Home" />
+        <q-route-tab
+          to="/camera"
+          name="camera"
+          icon="alarm"
+          label="Camera" />
+      </q-tabs>
     </q-footer>
 
     <q-page-container>
