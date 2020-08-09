@@ -12,7 +12,13 @@
           to="/camera"
           size="18px"
           icon="eva-camera-outline" 
-          class="large-screen-only"/>
+          class="large-screen-only q-mr-sm"/>
+
+        <q-separator
+          vertical
+          spaced
+          class="large-screen-only"
+        />
 
         <q-toolbar-title class="text-grand-hotel text-bold">
           Quasargram
@@ -68,9 +74,14 @@ export default {
 </script>
 
 <style lang="sass">
+  .q-toolbar
+    @media (min-width: $breakpoint-sm-min)
+      height: 77px
   .q-toolbar__title
-    text-align: center
     font-size: 30px
+    @media (max-width: $breakpoint-xs-max)
+      text-align: center
+
   .q-footer
     .q-tab__icon
       font-size: 30px
