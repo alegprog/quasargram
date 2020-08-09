@@ -29,14 +29,12 @@
         >
         <q-route-tab
           to="/"
-          name="home"
-          icon="mail"
-          label="Home" />
+          icon="eva-home-outline"
+          />
         <q-route-tab
           to="/camera"
-          name="camera"
-          icon="alarm"
-          label="Camera" />
+          icon="eva-camera-outline"
+          />
       </q-tabs>
     </q-footer>
 
@@ -57,3 +55,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+  .q-footer
+    .q-tab__icon
+      font-size: 30px
+</style>
