@@ -5,7 +5,7 @@
       bordered
       >
       <q-toolbar>
-        <q-toolbar-title>
+        <q-toolbar-title class="text-grand-hotel text-bold">
           Quasargram
         </q-toolbar-title>
       </q-toolbar>
@@ -52,6 +52,7 @@ export default {
 <style lang="sass">
   .q-toolbar__title
     text-align: center
+    font-size: 30px
   .q-footer
     .q-tab__icon
       font-size: 30px
