@@ -22,6 +22,11 @@
     <q-img
       src="https://cdn.quasar.dev/img/parallax2.jpg"
     />
+    <q-card-section>
+      <div >Golden Gate Bridge</div>
+      <div class="text-caption text-grey">June 10 9:04AM</div>
+    </q-card-section>
+
   </q-card>
 
   </q-page>
