@@ -14,7 +14,7 @@
     </div>
     <div class="row justify-center q-ma-md">
       <q-input
-        v-model="text"
+        v-model="post.caption"
         class="col col-sm-6"
         label="Caption" 
         dense
@@ -22,7 +22,7 @@
     </div>    
     <div class="row justify-center q-ma-md">
       <q-input
-        v-model="text"
+        v-model="post.location"
         class="col col-sm-6"
         label="Location" 
         dense
@@ -48,8 +48,21 @@
 </template>
 
 <script>
+import {uid} from 'quasar'
+
 export default {
   name: 'PageName',
+  data() {
+    return {
+      post : {
+        id: uid(),
+        caption: '',
+        location: '',
+        photo: null,
+        date: Date.now()
+      }
+    }
+  }
 }
 </script>
 
