@@ -51,6 +51,7 @@
 
 <script>
 import {uid} from 'quasar'
+require('md-gum-polyfill')
 
 export default {
   name: 'PageName',
