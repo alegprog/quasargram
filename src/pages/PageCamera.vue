@@ -1,9 +1,11 @@
 <template>
   <q-page class="constrain-more q-pa-md">
     <div class="camera-frame q-pa-md">
-      <img
+      <video
+        ref="video"
         class="full-width"
-        src="https://cdn.quasar.dev/img/parallax2.jpg">
+        autoplay
+       />
     </div>
     <div class="text-center q-pa-md">
       <q-btn
@@ -16,15 +18,15 @@
       <q-input
         v-model="post.caption"
         class="col col-sm-6"
-        label="Caption" 
+        label="Caption"
         dense
         />
-    </div>    
+    </div>
     <div class="row justify-center q-ma-md">
       <q-input
         v-model="post.location"
         class="col col-sm-6"
-        label="Location" 
+        label="Location"
         dense
         >
         <template v-slot:append>
@@ -33,7 +35,7 @@
             dense
             flat
             icon="eva-navigation-2-outline" />
-        </template>        
+        </template>
       </q-input>
     </div>
     <div class="row justify-center q-mt-lg">
@@ -62,6 +64,18 @@ export default {
         date: Date.now()
       }
     }
+  },
+  methods: {
+    initCamera() {
+      navigator.mediaDevices.getUserMedia({
+        video: true
+      }).then(stream => {
+        this.$refs.video.srcObject = stream
+      })
+    }
+  },
+  mounted() {
+    this.initCamera()
   }
 }
 </script>
