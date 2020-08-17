@@ -6,10 +6,16 @@
         class="full-width"
         autoplay
        />
+
+       <canvas
+        ref="canvas"
+        class="full-width"
+        height="240"/>
     </div>
     <div class="text-center q-pa-md">
       <q-btn
         round
+        @click="captureImage"
         color="grey-10"
         icon="eva-camera"
         size="lg" />
@@ -63,7 +69,8 @@ export default {
         location: '',
         photo: null,
         date: Date.now()
-      }
+      },
+      imageCaptured: false
     }
   },
   methods: {
@@ -73,6 +80,17 @@ export default {
       }).then(stream => {
         this.$refs.video.srcObject = stream
       })
+    },
+    captureImage() {
+      let video = this.$refs.video
+      let canvas = this.$refs.canvas
+
+      canvas.width = video.getBoundingClientRect().width
+      canvas.height = video.getBoundingClientRect().height
+
+      let context = canvas.getContexte('2d')
+      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+
     }
   },
   mounted() {
