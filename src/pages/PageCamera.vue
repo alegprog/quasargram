@@ -1,30 +1,54 @@
 <template>
   <q-page class="constrain-more q-pa-md">
     <div class="camera-frame q-pa-md">
-      <img
+      <video
+        v-show="!imageCaptured"
+        ref="video"
         class="full-width"
-        src="https://cdn.quasar.dev/img/parallax2.jpg">
+        autoplay
+       />
+
+       <canvas
+        v-show="imageCaptured"
+        ref="canvas"
+        class="full-width"
+        height="240"/>
     </div>
     <div class="text-center q-pa-md">
       <q-btn
         round
+        v-if="hasCameraSupport"
+        @click="captureImage"
         color="grey-10"
         icon="eva-camera"
         size="lg" />
+
+      <q-file
+        v-else
+        v-model="imageUpload"
+        @input="captureImageFallback"
+        label="Choose and image"
+        accept="image/*"
+        outlined
+        >
+        <template v-slot:prepend>
+          <q-icon name="eva-attach-outline" />
+        </template>
+      </q-file>
     </div>
     <div class="row justify-center q-ma-md">
       <q-input
         v-model="post.caption"
         class="col col-sm-6"
-        label="Caption" 
+        label="Caption"
         dense
         />
-    </div>    
+    </div>
     <div class="row justify-center q-ma-md">
       <q-input
         v-model="post.location"
         class="col col-sm-6"
-        label="Location" 
+        label="Location"
         dense
         >
         <template v-slot:append>
@@ -33,7 +57,7 @@
             dense
             flat
             icon="eva-navigation-2-outline" />
-        </template>        
+        </template>
       </q-input>
     </div>
     <div class="row justify-center q-mt-lg">
@@ -49,6 +73,7 @@
 
 <script>
 import {uid} from 'quasar'
+require('md-gum-polyfill')
 
 export default {
   name: 'PageName',
@@ -60,7 +85,88 @@ export default {
         location: '',
         photo: null,
         date: Date.now()
+      },
+      imageCaptured: false,
+      imageUpload: []],
+      hasCameraSupport: true
+    }
+  },
+  methods: {
+    initCamera() {
+      navigator.mediaDevices.getUserMedia({
+        video: true
+      }).then(stream => {
+        this.$refs.video.srcObject = stream
+      }).catch(error => {
+        this.hasCameraSupport = false
+      })
+    },
+    captureImage() {
+      let video = this.$refs.video
+      let canvas = this.$refs.canvas
+
+      canvas.width = video.getBoundingClientRect().width
+      canvas.height = video.getBoundingClientRect().height
+
+      let context = canvas.getContexte('2d')
+      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+
+      this.imageCaptured = true
+
+      this.post.photo = this.dataURItoBlob(canvas.toDataUrl())
+
+      this.disableCamera()
+    },
+    captureImageFallback(file) {
+      let reader = new FileReader()
+
+      let canvas = this.$refs.canvas
+      let context = canvas.getContexte('2d')
+
+      reader.onload = (event) => {
+          var img = new Image();
+          img.onload = () => {
+            canvas.width = img.width
+            canvas.height = img.height
+            context.drawImage(img,0,0)
+            this.imageCaptured = true
+          }
+
+          img.src = event.target.result
       }
+      reader.readAsDataURL( file );
+    },
+    disableCamera() {
+      this.$refs.video.srcObject.getVideoTracks().forEach(track => {
+        track.stop()
+      })
+    },
+    dataURItoBlob(dataURI) {
+      // convert base64/URLEncoded data component to raw binary data held in a string
+      let byteString;
+      if (dataURI.split(',')[0].indexOf('base64') >= 0)
+          byteString = atob(dataURI.split(',')[1]);
+      else
+          byteString = unescape(dataURI.split(',')[1]);
+
+      // separate out the mime component
+      let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+      // write the bytes of the string to a typed array
+      let ia = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+      }
+
+        return new Blob([ia], {type:mimeString});
+    }
+  },
+  mounted() {
+    this.initCamera()
+  },
+  beforeDestroy() {
+    if (this.hasCameraSupport) {
+      this.disableCamera()
     }
   }
 }
