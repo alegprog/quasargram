@@ -165,7 +165,7 @@ export default {
       navigator.geolocation.getCurrentPosition(position => {
         this.getCityAndCountry(position)
       }, error => {
-
+        this.locationError()
       }, { timeout: 7000 })
     },
     getCityAndCountry(position) {
@@ -173,7 +173,7 @@ export default {
       this.$axios.get(apiUrl).then(result => {
         this.locationSuccess(result)
       }).catch(error => {
-        console.log('error: ', error)
+        this.locationError()
       })
     },
     locationSuccess(result) {
@@ -181,6 +181,12 @@ export default {
       if (result.data.country) {
         this.post.location +=  `, ${ result.data.country }`
       }
+    },
+    locationError() {
+      this.$q.dialog({
+        title: 'Error',
+        message: 'Could not find your location.'
+      })
     }
   },
   mounted() {
