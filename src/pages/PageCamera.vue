@@ -53,6 +53,7 @@
         >
         <template v-slot:append>
           <q-btn
+            @click="getLocation"
             round
             dense
             flat
@@ -87,7 +88,7 @@ export default {
         date: Date.now()
       },
       imageCaptured: false,
-      imageUpload: []],
+      imageUpload: [],
       hasCameraSupport: true
     }
   },
@@ -159,6 +160,13 @@ export default {
       }
 
         return new Blob([ia], {type:mimeString});
+    },
+    getLocation() {
+      navigator.geolocation.getCurrentPosition(position => {
+
+      }, error => {
+
+      }, { timeout: 7000 })
     }
   },
   mounted() {
