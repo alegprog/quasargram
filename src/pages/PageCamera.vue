@@ -163,10 +163,24 @@ export default {
     },
     getLocation() {
       navigator.geolocation.getCurrentPosition(position => {
-
+        this.getCityAndCountry(position)
       }, error => {
 
       }, { timeout: 7000 })
+    },
+    getCityAndCountry(position) {
+      let apiUrl = `https://geocode.xyz/${ position.coords.latitude },${ position.coords.longitude }?json=1`
+      this.$axios.get(apiUrl).then(result => {
+        this.locationSuccess(result)
+      }).catch(error => {
+        console.log('error: ', error)
+      })
+    },
+    locationSuccess(result) {
+      this.post.location = result.data.city
+      if (result.data.country) {
+        this.post.location +=  `, ${ result.data.country }`
+      }
     }
   },
   mounted() {
