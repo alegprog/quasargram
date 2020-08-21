@@ -2,25 +2,41 @@
   dependencies
  */
 
-const express = require('express')
+  const express = require('express')
 
 /*
   config - express
  */
-const app = express()
-const port = 3000
+  const app = express()
+  const port = 3000
 
 
 /*
   endpoints
  */
-app.get('/', (request, response) => {
-  response.send('Hello World!')
-})
+  app.get('/', (request, response) => {
+    response.send('I love Node so hard, it hurts!')
+    console.log('/ endpoint is working! fine')
+  })
+
+  app.get('/posts', (request, response) => {
+    let posts = [
+      {
+        'caption' : 'Golden Gate Bridge',
+        'location' : 'San Francisco, United States'
+      },
+      {
+        'caption' : 'London Eye',
+        'location' : 'London, United Kingdom'
+      }
+    ]
+
+    response.send(posts)
+  })
 
 
 /*
   listen
  */
-app.listen(port)
+  app.listen(port)
 
