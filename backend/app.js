@@ -23,11 +23,11 @@
     let posts = [
       {
         'caption' : 'Golden Gate Bridge',
-        'location' : 'San Francisco, United States'
+        'location' : 'San Francisco, United States!'
       },
       {
         'caption' : 'London Eye',
-        'location' : 'London, United Kingdom'
+        'location' : 'London, United Kingdom.'
       }
     ]
 
@@ -38,5 +38,5 @@
 /*
   listen
  */
-  app.listen(port)
+  app.listen(process.env.PORT || port)
 
