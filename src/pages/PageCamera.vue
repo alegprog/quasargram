@@ -98,6 +98,7 @@ export default {
   computed: {
     locationSupported() {
       return ('geolocation' in navigator)
+    }
   },
   methods: {
     initCamera() {
@@ -207,7 +208,6 @@ export default {
       this.disableCamera()
     }
   }
-}
 </script>
 
 <style lang="sass">

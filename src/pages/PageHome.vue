@@ -97,10 +97,18 @@ export default {
       ]
     }
   },
+  methods: {
+    getPosts() {
+      console.log('Get Posts')
+    }
+  },
   filters: {
     niceDate(value ) {
       return date.formatDate(value, 'MMMM D, YYYY h:mmA')
     }
+  },
+  created() {
+    this.getPosts()
   }
 }
 </script>
