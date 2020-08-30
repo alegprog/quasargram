@@ -32,18 +32,20 @@
   })
 
   app.get('/posts', (request, response) => {
-    let posts = [
-      {
-        'caption' : 'Golden Gate Bridge',
-        'location' : 'San Francisco, United States!'
-      },
-      {
-        'caption' : 'London Eye',
-        'location' : 'London, United Kingdom.'
-      }
-    ]
+    let posts = [];
 
-    response.send(posts)
+    db.collection('posts').get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        posts.push(doc.data());
+      });
+      
+      response.send(posts)
+    })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
+        
+
   })
 
 
