@@ -3,16 +3,28 @@
  */
 
   const express = require('express')
+  const admin = require('firebase-admin');
 
-/*
+  /*
   config - express
- */
-  const app = express()
-  const port = 3000
+  */
+ const app = express()
+ const port = 3000
+ 
+  /*
+  config - firebase
+  */
+  
+  let serviceAccount = require('./serviceAccountKey.json');
 
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
 
-/*
-  endpoints
+  let db = admin.firestore();
+ 
+ /*
+ endpoints
  */
   app.get('/', (request, response) => {
     response.send('I love Node so hard, it hurts!')
