@@ -73,7 +73,10 @@ export default {
       this.$axios.get('http://localhost:3000/posts').then(response => {
         this.posts = response.data
       }).catch(error =>{
-
+        this.$q.dialog({
+          title: 'Error',
+          message: 'Could not download posts.'
+        })
       })
     }
   },
