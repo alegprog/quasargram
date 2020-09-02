@@ -32,6 +32,7 @@
   })
 
   app.get('/posts', (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*')
     let posts = [];
 
     db.collection('posts').get().then((snapshot) => {
