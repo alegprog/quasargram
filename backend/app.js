@@ -31,6 +31,8 @@
     console.log('/ endpoint is working! fine')
   })
 
+  // Get all posts
+
   app.get('/posts', (request, response) => {
     response.set('Access-Control-Allow-Origin', '*')
     let posts = [];
@@ -46,6 +48,13 @@
       console.log('Error getting documents', err);
     });
         
+
+  })
+
+  // Get all posts
+
+  app.get('/createPost', (request, response) => {
+    response.send('Creating posts')        
 
   })
 
