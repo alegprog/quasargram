@@ -3,16 +3,28 @@
  */
 
   const express = require('express')
+  const admin = require('firebase-admin');
 
-/*
+  /*
   config - express
- */
-  const app = express()
-  const port = 3000
+  */
+ const app = express()
+ const port = 3000
+ 
+  /*
+  config - firebase
+  */
+  
+  let serviceAccount = require('./serviceAccountKey.json');
 
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
 
-/*
-  endpoints
+  let db = admin.firestore();
+ 
+ /*
+ endpoints
  */
   app.get('/', (request, response) => {
     response.send('I love Node so hard, it hurts!')
@@ -20,18 +32,21 @@
   })
 
   app.get('/posts', (request, response) => {
-    let posts = [
-      {
-        'caption' : 'Golden Gate Bridge',
-        'location' : 'San Francisco, United States!'
-      },
-      {
-        'caption' : 'London Eye',
-        'location' : 'London, United Kingdom.'
-      }
-    ]
+    response.set('Access-Control-Allow-Origin', '*')
+    let posts = [];
 
-    response.send(posts)
+    db.collection('posts').orderBy('date','desc').get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        posts.push(doc.data());
+      });
+      
+      response.send(posts)
+    })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
+        
+
   })
 
 

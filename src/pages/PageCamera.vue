@@ -98,6 +98,7 @@ export default {
   computed: {
     locationSupported() {
       return ('geolocation' in navigator)
+    }
   },
   methods: {
     initCamera() {
