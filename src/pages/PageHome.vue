@@ -2,7 +2,7 @@
   <q-page class="constrain q-pa-md">
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-sm-8">
-        <template v-if="!loadingPosts">
+        <template v-if="!loadingPosts && posts.length">
           <q-card
             v-for="post in posts"
             :key="post.id"
@@ -36,6 +36,9 @@
             </q-card-section>
 
           </q-card>
+        </template>
+        <template v-else-if="!loadingPosts && !posts.length">
+          <h5 class="text-center text-grey">No posts yet.</h5>
         </template>
         <template v-else>
           
@@ -102,20 +105,16 @@ export default {
   methods: {
     getPosts() {
       this.loadingPosts = true
-      setTimeout(() => {
-        this.$axios.get('http://localhost:3000/posts').then(response => {
-          this.posts = response.data
-          this.loadingPosts = false
-        }).catch(error =>{
-          this.$q.dialog({
-            title: 'Error',
-            message: 'Could not download posts.'
-          })
-          this.loadingPosts = false
+      this.$axios.get('http://localhost:3000/posts').then(response => {
+        this.posts = response.data
+        this.loadingPosts = false
+      }).catch(error =>{
+        this.$q.dialog({
+          title: 'Error',
+          message: 'Could not download posts.'
         })
-
-      }, 4000)
-
+        this.loadingPosts = false
+      })
     }
   },
   filters: {
