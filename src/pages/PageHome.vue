@@ -8,7 +8,8 @@
             :key="post.id"
             class="card-post p-mb-md"
             flat
-            bordered>
+            bordered
+            >
             <q-item>
               <q-item-section avatar>
                 <q-avatar>
@@ -37,7 +38,31 @@
           </q-card>
         </template>
         <template v-else>
-          Loading...
+          
+          <q-card flat bordered>
+            <q-item>
+              <q-item-section avatar>
+                <q-skeleton type="QAvatar" animation="fade" size="40" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>
+                  <q-skeleton type="text" animation="fade" />
+                </q-item-label>
+                <q-item-label caption>
+                  <q-skeleton type="text" animation="fade" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-skeleton height="200px" square animation="fade" />
+
+            <q-card-section>
+              <q-skeleton type="text" class="text-subtitle2" animation="fade" />
+              <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+            </q-card-section>
+          </q-card>
+
         </template>  
       </div>
       <div class="col-4 large-screen-only">
@@ -76,14 +101,21 @@ export default {
   },
   methods: {
     getPosts() {
-      this.$axios.get('http://localhost:3000/posts').then(response => {
-        this.posts = response.data
-      }).catch(error =>{
-        this.$q.dialog({
-          title: 'Error',
-          message: 'Could not download posts.'
+      this.loadingPosts = true
+      setTimeout(() => {
+        this.$axios.get('http://localhost:3000/posts').then(response => {
+          this.posts = response.data
+          this.loadingPosts = false
+        }).catch(error =>{
+          this.$q.dialog({
+            title: 'Error',
+            message: 'Could not download posts.'
+          })
+          this.loadingPosts = false
         })
-      })
+
+      }, 4000)
+
     }
   },
   filters: {
