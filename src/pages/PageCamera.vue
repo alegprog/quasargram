@@ -208,6 +208,7 @@ export default {
       this.disableCamera()
     }
   }
+}
 </script>
 
 <style lang="sass">
