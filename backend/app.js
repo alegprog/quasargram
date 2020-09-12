@@ -53,8 +53,9 @@
 
   // Create post
 
-  app.get('/createPost', (request, response) => {
-    response.send('Creating posts')        
+  app.post('/posts', (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*')
+    response.send(request.headers)        
 
   })
 

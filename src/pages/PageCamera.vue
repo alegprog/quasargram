@@ -65,6 +65,7 @@
     </div>
     <div class="row justify-center q-mt-lg">
       <q-btn
+        @click="addPost"
         unelevated
         rounded
         color="primary"
@@ -117,12 +118,12 @@ export default {
       canvas.width = video.getBoundingClientRect().width
       canvas.height = video.getBoundingClientRect().height
 
-      let context = canvas.getContexte('2d')
+      let context = canvas.getContext('2d')
       context.drawImage(video, 0, 0, canvas.width, canvas.height)
 
       this.imageCaptured = true
 
-      this.post.photo = this.dataURItoBlob(canvas.toDataUrl())
+      this.post.photo = this.dataURItoBlob(canvas.toDataURL())
 
       this.disableCamera()
     },
@@ -198,6 +199,21 @@ export default {
         message: 'Could not find your location.'
       })
       this.locationLoading = false
+    },
+    addPost() {
+      let formData = new FormData()
+      formData.append('id',this.post.id)
+      formData.append('caption',this.post.caption)
+      formData.append('location',this.post.location)
+      formData.append('date',this.post.date)
+      formData.append('file',this.post.photo, this.post.id + '.png')
+
+      this.$axios.post(`${ process.env.API }/posts`, formData).then(response => {
+        console.log('response', response)
+      }).catch(error => {
+        console.log('error', error)
+      })
+
     }
   },
   mounted() {
