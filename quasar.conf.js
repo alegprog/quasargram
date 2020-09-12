@@ -5,6 +5,9 @@
 
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const API_LOCAL = 'http://localhost:3000'
+const API_PROD  = 'https://quasargram-backend-mx.herokuapp.com'
+
 
 module.exports = function (/* ctx */) {
   return {
@@ -43,6 +46,9 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: {
+        API: API_LOCAL // API_LOCAL | API_PROD
+      },
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
       // transpile: false,
