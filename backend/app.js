@@ -51,7 +51,7 @@
 
   })
 
-  // Get all posts
+  // Create post
 
   app.get('/createPost', (request, response) => {
     response.send('Creating posts')        
