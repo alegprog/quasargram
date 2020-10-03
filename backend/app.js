@@ -20,10 +20,12 @@
   let serviceAccount = require('./serviceAccountKey.json');
 
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "quasargram-cb983.appspot.com"
   });
 
-  let db = admin.firestore();
+  const db = admin.firestore();
+  let bucket = admin.storage().bucket();
  
  /*
  endpoints
