@@ -19,6 +19,7 @@
         round
         v-if="hasCameraSupport"
         @click="captureImage"
+        :disable="imageCaptured"
         color="grey-10"
         icon="eva-camera"
         size="lg" />
@@ -40,14 +41,14 @@
       <q-input
         v-model="post.caption"
         class="col col-sm-6"
-        label="Caption"
+        label="Caption *"
         dense
         />
     </div>
     <div class="row justify-center q-ma-md">
       <q-input
-        :loading="locationLoading"
         v-model="post.location"
+        :loading="locationLoading"
         class="col col-sm-6"
         label="Location"
         dense
@@ -65,11 +66,13 @@
     </div>
     <div class="row justify-center q-mt-lg">
       <q-btn
-        @click="addPost"
-        unelevated
-        rounded
+        @click="addPost()"
+        :disable="!post.caption || !post.photo"
         color="primary"
-        label="Post Image" />
+        label="Post Image" 
+        rounded
+        unelevated
+        />
     </div>
 
   </q-page>
