@@ -212,9 +212,20 @@ export default {
       formData.append('file',this.post.photo, this.post.id + '.png')
 
       this.$axios.post(`${ process.env.API }/posts`, formData).then(response => {
-        console.log('response', response)
+        console.log('response', response);
+        this.$router.push('/');
+        this.$q.notify({
+          message: 'Post created!',
+          actions: [
+            { label: 'Dismiss', color: 'white'}
+          ]
+        })        
       }).catch(error => {
         console.log('error', error)
+        this.$q.dialog({
+          title: 'Error',
+          message: 'Sorry, could not create post!'
+        })        
       })
 
     }
